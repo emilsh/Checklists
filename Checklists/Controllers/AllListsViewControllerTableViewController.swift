@@ -10,10 +10,16 @@ import UIKit
 
 class AllListsViewControllerTableViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
 
-    var dataModel: DataModel!
+  var dataModel: DataModel!
+  let cellIdentifier = "ChecklistItem"
     
   override func viewDidLoad() {
     super.viewDidLoad()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    tableView.reloadData()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -41,13 +47,26 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cellForTableView(tableView: tableView)
+//        let cell = cellForTableView(tableView: tableView)
+      let cell: UITableViewCell!
+      if let tmp = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+        cell = tmp
+      } else {
+        cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
+      }
         
-        let checklist = dataModel.lists[indexPath.row]
-        cell.textLabel?.text = checklist.name
-        cell.accessoryType = .detailDisclosureButton
-
-        return cell
+      let checklist = dataModel.lists[indexPath.row]
+      cell.textLabel?.text = checklist.name
+      cell.accessoryType = .detailDisclosureButton
+      
+      let count = checklist.countUncheckedItems()
+      if checklist.items.count == 0 {
+        cell.detailTextLabel?.text = "(No Items)"
+      } else {
+        cell.detailTextLabel?.text = count == 0 ? "All Done" : "\(count) Remaining"
+      }
+      
+      return cell
     }
     
     //MARK: - UITableViewDelegate methods
