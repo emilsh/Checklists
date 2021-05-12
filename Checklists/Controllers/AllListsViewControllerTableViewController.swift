@@ -8,13 +8,25 @@
 
 import UIKit
 
-class AllListsViewControllerTableViewController: UITableViewController, ListDetailViewControllerDelegate {
+class AllListsViewControllerTableViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
 
     var dataModel: DataModel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    navigationController?.delegate = self
+    
+    let index = dataModel.indexOfSelectedChecklist
+    if index >= 0 && index < dataModel.lists.count {
+      let checklist = dataModel.lists[index]
+      performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
+  }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -41,8 +53,11 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     //MARK: - UITableViewDelegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let checklist = dataModel.lists[indexPath.row]
-        performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+      //TODO: Store the index of the selected row into UserDefaults
+      dataModel.indexOfSelectedChecklist = indexPath.row
+      
+      let checklist = dataModel.lists[indexPath.row]
+      performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
@@ -106,7 +121,7 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowChecklist" {
             let controller = segue.destination as! ChecklistViewController
-            controller.checklist = sender as! Checklist
+          controller.checklist = sender as? Checklist
         } else if segue.identifier == "AddChecklist" {
             let navController = segue.destination as! UINavigationController
             let controller = navController.topViewController as! ListDetailViewController
@@ -114,6 +129,12 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
             controller.checklistToEdit = nil
         }
     }
-    
-    
+  
+  //MARK: - Navigation Controller Delegates
+  func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    if viewController === self {
+      dataModel.indexOfSelectedChecklist = -1
+    }
+  }
+  
 }
