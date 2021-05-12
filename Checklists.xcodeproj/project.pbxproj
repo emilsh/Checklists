@@ -67,19 +67,43 @@
 			isa = PBXGroup;
 			children = (
 				207B5FF81FE4269B0034739C /* AppDelegate.swift */,
+				49289823264B964E00D05523 /* Controllers */,
+				207B60041FE4269B0034739C /* Info.plist */,
+				49289822264B963A00D05523 /* Model */,
+				49289824264C4C3900D05523 /* Resources */,
+			);
+			path = Checklists;
+			sourceTree = "<group>";
+		};
+		49289822264B963A00D05523 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				202CBE181FE9696400549605 /* DataModel.swift */,
+				202CD2741FE6CCDA00C34E59 /* Checklist.swift */,
+				207B600A1FE445DE0034739C /* ChecklistItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49289823264B964E00D05523 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				202CD2721FE6B6FA00C34E59 /* AllListsViewControllerTableViewController.swift */,
 				207B5FFA1FE4269B0034739C /* ChecklistViewController.swift */,
 				202EDC581FE828D200EF2E5B /* ListDetailViewController.swift */,
 				207B600C1FE45A500034739C /* ItemDetailViewController.swift */,
-				202CBE181FE9696400549605 /* DataModel.swift */,
-				202CD2741FE6CCDA00C34E59 /* Checklist.swift */,
-				207B600A1FE445DE0034739C /* ChecklistItem.swift */,
-				207B5FFC1FE4269B0034739C /* Main.storyboard */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		49289824264C4C3900D05523 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				207B5FFF1FE4269B0034739C /* Assets.xcassets */,
 				207B60011FE4269B0034739C /* LaunchScreen.storyboard */,
-				207B60041FE4269B0034739C /* Info.plist */,
+				207B5FFC1FE4269B0034739C /* Main.storyboard */,
 			);
-			path = Checklists;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
