@@ -28,6 +28,7 @@ class ChecklistItem: NSObject, NSCoding {
     
     var text = ""
     var checked = false
+    var title = ""
     
     func toggleChecked() {
         checked = !checked
