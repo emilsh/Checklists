@@ -109,6 +109,7 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
       dataModel.sortChecklists()
       tableView.reloadData()
       navigationController?.popViewController(animated: true)
+      //dismiss(animated: false, completion: nil)
     }
     
   func listDetailViewController(controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
