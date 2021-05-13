@@ -65,7 +65,7 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
       } else {
         cell.detailTextLabel?.text = count == 0 ? "All Done" : "\(count) Remaining"
       }
-      
+      cell.imageView?.image = UIImage(named: checklist.iconName)
       return cell
     }
     
@@ -105,36 +105,29 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     }
     
     func listDetailViewController(controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
-        let newRowIndex = dataModel.lists.count
-        dataModel.lists.append(checklist)
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
-        dismiss(animated: true, completion: nil)
+      dataModel.lists.append(checklist)
+      dataModel.sortChecklists()
+      tableView.reloadData()
+      navigationController?.popViewController(animated: true)
     }
     
-    func listDetailViewController(controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
-        
-        if let index = dataModel.lists.index(of: checklist) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                cell.textLabel?.text = checklist.name
-            }
-        }
-        dismiss(animated: true, completion: nil)
-    }
+  func listDetailViewController(controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
+    dataModel.sortChecklists()
+    tableView.reloadData()
+    navigationController?.popViewController(animated: true)
+  }
     
     //MARK: - Helper methods
     
-    func cellForTableView(tableView: UITableView) -> UITableViewCell {
+  func cellForTableView(tableView: UITableView) -> UITableViewCell {
+      let cellId = "CellId"
         
-        let cellId = "CellId"
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellId){
-            return cell
-        } else {
-            return UITableViewCell(style: .default, reuseIdentifier: cellId)
-        }
-    }
+      if let cell = tableView.dequeueReusableCell(withIdentifier: cellId){
+          return cell
+      } else {
+          return UITableViewCell(style: .default, reuseIdentifier: cellId)
+      }
+  }
     
     //MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
