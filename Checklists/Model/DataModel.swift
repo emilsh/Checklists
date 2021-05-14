@@ -26,39 +26,33 @@ class DataModel {
       handleFirstTime()
     }
     
-    func documentsDirectory() -> String {
-      let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    func documentsDirectory() -> URL {
+      let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
       return path[0]
     }
     
-    func dataFilePath() -> String? {
-      let filePath = (documentsDirectory() as NSString).strings(byAppendingPaths: ["Checklists.plist"]).first
-      if let dataFilePath = filePath {
-        return dataFilePath as String
-      } else {
-        return nil
-      }
+    func dataFilePath() -> URL {
+      return documentsDirectory().appendingPathComponent("Checklists.plist")
     }
     
     func saveChecklists() {
-      let data = NSMutableData()
-      let archiver = NSKeyedArchiver(forWritingWith: data)
-      archiver.encode(lists, forKey: "Checklists")
-      archiver.finishEncoding()
-      if let filePath = dataFilePath() {
-          data.write(toFile: filePath, atomically: true)
+      let encoder = PropertyListEncoder()
+      do {
+        let data = try encoder.encode(lists)
+        try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+      } catch {
+        print("Error encoding: \(error.localizedDescription)")
       }
     }
     
-    func loadChecklists() {
-      if let path = dataFilePath() {
-        if FileManager.default.fileExists(atPath: path) {
-          if let data = NSData(contentsOfFile: path) {
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data)
-            lists = unarchiver.decodeObject(forKey: "Checklists") as! [Checklist]
-            sortChecklists()
-            unarchiver.finishDecoding()
-        }
+  func loadChecklists() {
+    let path = dataFilePath()
+    if let data = try? Data(contentsOf: path) {
+      let decoder = PropertyListDecoder()
+      do {
+        lists = try decoder.decode([Checklist].self, from: data)
+      } catch {
+        print("Error decoding lists array: \(error.localizedDescription)")
       }
     }
   }
