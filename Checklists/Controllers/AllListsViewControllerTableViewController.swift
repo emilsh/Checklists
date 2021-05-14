@@ -80,14 +80,13 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let navController = storyboard?.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
-        let controller = navController.topViewController as! ListDetailViewController
+      let controller = storyboard!.instantiateViewController(withIdentifier: "ListDetailViewController") as! ListDetailViewController
+      controller.delegate = self
+    
+      let checklist = dataModel.lists[indexPath.row]
+      controller.checklistToEdit = checklist
         
-        controller.delegate = self
-        let checklist = dataModel.lists[indexPath.row]
-        controller.checklistToEdit = checklist
-        
-        present(navController, animated: true, completion: nil)
+      navigationController?.pushViewController(controller, animated: true)
     }
     
     //MARK: - UITableViewDataSource methods
@@ -101,7 +100,7 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     //MARK: - ListDetailViewControllerDelegate
     
     func listDetailViewControllerDidCancel(controller: ListDetailViewController) {
-        dismiss(animated: true, completion: nil)
+      navigationController?.popViewController(animated: true)
     }
     
     func listDetailViewController(controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
@@ -135,10 +134,9 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
             let controller = segue.destination as! ChecklistViewController
           controller.checklist = sender as? Checklist
         } else if segue.identifier == "AddChecklist" {
-            let navController = segue.destination as! UINavigationController
-            let controller = navController.topViewController as! ListDetailViewController
+            let controller  = segue.destination as! ListDetailViewController
             controller.delegate = self
-            controller.checklistToEdit = nil
+            //controller.checklistToEdit = nil
         }
     }
   
