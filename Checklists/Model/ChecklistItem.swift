@@ -12,6 +12,7 @@ class ChecklistItem: NSObject, Codable {
     
   var text = ""
   var checked = false
+  var shouldRemind = false
   
   func encode(with aCoder: NSCoder) {
         aCoder.encode(text, forKey: "Text")
