@@ -36,4 +36,10 @@ class Checklist: NSObject, Codable {
       cnt + (item.checked ? 0 : 1)
     }
   }
+  
+  func sortItems() {
+    items.sort { item1, item2 in
+      return !item1.checked
+    }
+  }
 }
