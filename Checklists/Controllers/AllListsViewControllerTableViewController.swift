@@ -91,7 +91,7 @@ class AllListsViewControllerTableViewController: UITableViewController, ListDeta
     
     //MARK: - UITableViewDataSource methods
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         dataModel.lists.remove(at: indexPath.row)
         
         tableView.deleteRows(at: [indexPath], with: .automatic)

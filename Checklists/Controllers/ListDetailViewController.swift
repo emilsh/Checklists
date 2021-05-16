@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ListDetailViewControllerDelegate: class {
+protocol ListDetailViewControllerDelegate: AnyObject {
     func listDetailViewControllerDidCancel(controller: ListDetailViewController)
     func listDetailViewController(controller: ListDetailViewController, didFinishAdding checklist: Checklist)
     func listDetailViewController(controller: ListDetailViewController, didFinishEditing checklist: Checklist)

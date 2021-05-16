@@ -9,7 +9,7 @@
 import UIKit
 import UserNotifications
 
-protocol ItemDetailViewControllerDelegate: class {
+protocol ItemDetailViewControllerDelegate: AnyObject {
   func itemDetailViewControllerDidCancel(controller: ItemDetailViewController)
   func itemDetailViewController(controller: ItemDetailViewController, didFinishAddingItem item: ChecklistItem)
   func itemDetailViewController(controller: ItemDetailViewController, didFinishEditingItem item: ChecklistItem)

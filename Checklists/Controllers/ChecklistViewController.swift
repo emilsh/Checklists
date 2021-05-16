@@ -63,7 +63,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         checklist.items.remove(at: indexPath.row)
         
         tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -100,7 +100,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
   func itemDetailViewController(controller: ItemDetailViewController, didFinishEditingItem item: ChecklistItem) {
     
-    if let index = checklist.items.index(of: item) {
+    if let index = checklist.items.firstIndex(of: item) {
       
       let indexPath = IndexPath(row: index, section: 0)
       if let cell = tableView.cellForRow(at: indexPath) {

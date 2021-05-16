@@ -50,7 +50,7 @@ class ChecklistItem: NSObject, Codable {
       let content = UNMutableNotificationContent()
       content.title = "Reminder: "
       content.body = text
-      content.sound = UNNotificationSound.default()
+      content.sound = UNNotificationSound.default
       
       let calendar = Calendar(identifier: .gregorian)
       let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: dueDate)
