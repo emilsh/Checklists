@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -21,11 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let navController = window?.rootViewController as! UINavigationController
     let controller = navController.viewControllers[0] as! AllListsViewControllerTableViewController
     controller.dataModel = dataModel
-        
-    //Notification authorization
-    let center = UNUserNotificationCenter.current()
-    center.delegate = self
-    
+
     return true
   }
 
@@ -56,10 +51,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveData() {
         dataModel.saveChecklists()
     }
-  
-  // MARK: - User Notification Delegates
-  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    print("Received local notification \(notification)")
-  }
 }
 

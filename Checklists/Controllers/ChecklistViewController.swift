@@ -46,10 +46,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
           let item = checklist.items[indexPath.row]
             
           item.toggleChecked()
-//          checklist.sortItems()
-//          tableView.reloadData()
-          
-          
+
           if item.checked {
             checklist.items.append(item)
             checklist.items.remove(at: indexPath.row)
@@ -83,11 +80,11 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             label.text = ""
         }
     }
-    
-    func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem) {
-        let label = cell.viewWithTag(1000) as! UILabel
-        label.text = item.text
-    }
+      
+  func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem) {
+    let label = cell.viewWithTag(1000) as! UILabel
+    label.text = item.text
+  }
     
     //MARK: - ItemDetailViewControllerDelegate
     
@@ -96,16 +93,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     }
     
     func itemDetailViewController(controller: ItemDetailViewController, didFinishAddingItem item: ChecklistItem) {
-        
-//      let newRowIndex = checklist.items.count
-        
-//      checklist.items.append(item)
       checklist.items.insert(item, at: 0)
       tableView.reloadData()
-        
-//      let indexPath = IndexPath(row: newRowIndex, section: 0)
-//      tableView.insertRows(at: [indexPath], with: .automatic)
-        
       dismiss(animated: true, completion: nil)
     }
     
